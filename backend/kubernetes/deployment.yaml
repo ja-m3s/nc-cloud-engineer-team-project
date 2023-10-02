@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 3s-a-cloud-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: 3s-a-cloud-backend
+  template:
+    metadata:
+      labels:
+        app: 3s-a-cloud-backend
+    spec:
+      containers:
+      - name: 3s-a-cloud-backend-container
+        image: public.ecr.aws/t6j2d9a4/3s-a-cloud/backend:latest
+        ports:
+        - containerPort: 8080
+

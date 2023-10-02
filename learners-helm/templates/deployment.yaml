@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.backend.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.backend.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.backend.name }}
+    spec:
+      containers:
+      - name: 3s-a-cloud-container
+        image: {{ .Values.backend.image }}
+        ports:
+        - containerPort: {{ .Values.backend.containerPort }}
+
+
+---
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.frontend.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.frontend.name }} 
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.frontend.name }} 
+    spec:
+      containers:
+      - name: 3s-a-cloud-frontend-container
+        image: {{ .Values.frontend.image }} 
+        ports:
+        - containerPort: {{ .Values.frontend.containerPort }} 
+
+
+---
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.database.name }} 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.database.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.database.name }}
+    spec:
+      containers:
+      - name: 3s-a-cloud-database-container
+        image: {{ .Values.database.image }}
+        ports:
+        - containerPort: {{ .Values.database.containerPort }}
+        env:
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database-password
+              key: password
+   
+

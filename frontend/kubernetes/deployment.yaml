@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 3s-a-cloud-frontend 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: 3s-a-cloud-frontend
+  template:
+    metadata:
+      labels:
+        app: 3s-a-cloud-frontend
+    spec:
+      containers:
+      - name: 3s-a-cloud-frontend-container
+        image: public.ecr.aws/t6j2d9a4/3s-a-cloud/frontend:latest
+        ports:
+        - containerPort: 5173

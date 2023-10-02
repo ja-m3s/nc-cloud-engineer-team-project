@@ -1,0 +1,23 @@
+backend:
+  name: 3s-a-cloud-backend
+  image: public.ecr.aws/t6j2d9a4/3s-a-cloud/backend:latest
+  port: 8080
+  containerPort: 8080
+  replicaCount: 1
+  type: LoadBalancer
+
+frontend:
+  name: 3s-a-cloud-frontend
+  image: public.ecr.aws/t6j2d9a4/3s-a-cloud/frontend:latest
+  port: 80
+  containerPort: 5173
+  replicaCount: 1
+  type: LoadBalancer
+
+database:
+  name: 3s-a-cloud-database
+  image: public.ecr.aws/t6j2d9a4/3s-a-cloud/database:latest
+  port: 5432
+  containerPort: 5432
+  replicaCount: 1
+  type: ClusterIP

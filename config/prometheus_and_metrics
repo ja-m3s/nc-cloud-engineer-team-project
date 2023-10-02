@@ -1,0 +1,24 @@
+https://prometheus-community.github.io/helm-charts
+
+
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
+kubectl logs -n kube-system deployment/metrics-server
+
+kubectl top pods --all-namespaces | sort --key 3 -n -r
+
+
+
+
+argocd app list // to list deployments 
+
+argocd app get prometheus
+
+kubectl describe prometheus prometheus-kube-prometheus-prometheus -n default
+
+argocd app delete argocd/prometheus
+
+
+
+
+

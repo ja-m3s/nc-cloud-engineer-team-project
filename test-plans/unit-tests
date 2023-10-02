@@ -1,0 +1,12 @@
+* When filling out this file, please first reference the name of your ticket and make sure to divide the info in two parts: Expected outcome (specify what was being tested) and Actual outcome (errors, success) *
+
+## Ticket: Analyse Backend code
+
+# Process: Running the java application on my local machine, trying to access the following endpoints: /health, /info, /prometheus
+
+# Results: First time accessing the endpoints displays info about health ("UP"), prometheus metrics and info displays an empty object. When re-running the app and accessing the endpoints, error message: "Full authentication is required to access this resource". 
+
+# Debugging: TBC
+
+# Backend code spins up a test database that produces fake data to return in the terminal. Currently the database 
+

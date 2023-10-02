@@ -1,0 +1,16 @@
+Reviewed by: James Walsh, James Whitburn 
+
+
+1. Copy frontend code and backend code, remove .git file to avoid conflicts
+
+2. Creating and maintaining a Review Directory 
+
+3. Delete project-overview folder 
+
+4. Change the tests folder name to test-plans
+
+5. Change the test-plans file name to unit-tests
+
+6. Change all underscores to dashes 
+
+

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 3s-a-cloud-database 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: 3s-a-cloud-database
+  template:
+    metadata:
+      labels:
+        app: 3s-a-cloud-database
+    spec:
+      containers:
+      - name: 3s-a-cloud-database-container
+        image: public.ecr.aws/t6j2d9a4/3s-a-cloud/database:latest
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database-password
+              key: password
+   

@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-3s-a-cloud-backend
+spec:
+  type: {{ .Values.backend.type }}
+  selector:
+    app: {{ .Values.backend.name }}
+  ports:
+  - port: {{ .Values.backend.port }}
+    targetPort: {{ .Values.backend.containerPort }}
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-3s-a-cloud-frontend
+spec:
+  type: {{ .Values.frontend.type }}
+  selector:
+    app: {{ .Values.frontend.name }}
+  ports:
+  - port: {{ .Values.frontend.port }}
+    targetPort: {{ .Values.frontend.containerPort }}
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-3s-a-cloud-database
+spec:
+  type: {{ .Values.database.type }}
+  selector:
+    app: {{ .Values.database.name }}
+  ports:
+  - port: {{ .Values.database.port }}
+    targetPort: {{ .Values.database.containerPort }}
