@@ -1,0 +1,89 @@
+# Name config.yml
+# Desc: CircleCI configuration for 3s-a-cloud team project
+# Authors: James Walsh & James Whitburn
+version: 2.1
+orbs:
+  aws-ecr: circleci/aws-ecr@8.2.1
+jobs:
+  build-image-and-push-frontend:
+    working_directory: ~/ce-team-project/
+    docker:
+      - image: cimg/aws:2023.05
+    steps:
+      - setup_remote_docker
+      - aws-ecr/build-and-push-image:
+          repo: 3s-a-cloud/frontend
+          path: "frontend" 
+          build-path: "frontend"
+          tag: latest
+          public-registry-alias: t6j2d9a4
+          public-registry: true
+  build-image-and-push-database:
+    working_directory: ~/ce-team-project/
+    docker:
+      - image: cimg/aws:2023.05
+    steps:
+      - setup_remote_docker
+      - aws-ecr/build-and-push-image:
+          repo: 3s-a-cloud/database
+          path: "database" 
+          build-path: "database"
+          tag: latest
+          public-registry-alias: t6j2d9a4
+          public-registry: true
+  build-and-test-backend:
+    working_directory: /home/circleci/ce-team-project
+    docker:
+      - image: cimg/openjdk:17.0.7
+    steps:
+      - checkout
+      - run:
+          name: Build
+          command: mvn -B -DskipTests clean package
+          working_directory: /home/circleci/ce-team-project/backend
+      - run:
+          name: Test
+          command: mvn test
+          working_directory: /home/circleci/ce-team-project/backend
+  build-image-and-push-backend:
+    working_directory: ~/ce-team-project/
+    docker:
+      - image: cimg/aws:2023.05
+    steps:
+      - setup_remote_docker
+      - aws-ecr/build-and-push-image:
+          repo: 3s-a-cloud/backend
+          path: "backend" 
+          build-path: "backend"
+          tag: latest
+          public-registry-alias: t6j2d9a4
+          public-registry: true
+workflows:
+  build-all-apps: 
+    jobs:
+      - build-image-and-push-frontend:
+          filters:
+            branches:
+              only: main
+          context: 
+            - 3s-a-cloud
+      - build-image-and-push-database:
+          filters:
+            branches:
+              only: main
+          context: 
+            - 3s-a-cloud
+      - build-and-test-backend:
+          filters:
+            branches:
+              only: main
+          context: 
+             - 3s-a-cloud
+      - build-image-and-push-backend:
+          filters:
+            branches:
+              only: main
+          requires: 
+            - build-and-test-backend
+          context: 
+            - 3s-a-cloud
